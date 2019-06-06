@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<head>
+<head th:replace="~{common/header}">
 	<meta charset="UTF-8">
 	<title>图书管理系统</title>
 	<link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
@@ -14,7 +14,7 @@
 
 	<div class="container">
 		<div class="row" style="height: 30px;"></div>
-		<div class="row">
+		<div class="row" th:replace="~{common/banner}">
 			<div class="col-lg-4" style="text-align: center;">
 				<img src="../../static/images/logo.png" />
 			</div>
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="row" style="height: 20px;"></div>
-		<div class="row">
+		<div class="row" th:replace="~{common/nav::nav('sale')}">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10">
 				<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #A9C8E7;">
@@ -40,7 +40,7 @@
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10">
-				<table class="table col-lg-10" style="border: 1px solid #cccfc9;">
+				<table class="table" style="border: 1px solid #cccfc9;">
 					<thead>
 						<tr class="table-secondary">
 							<th scope="col" width="10%">选择</th>
@@ -49,13 +49,15 @@
 							<th scope="col" width="30%">时间</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody th:remove="all-but-first">
+						<tr th:each="data : ${datas.content}" th:object="${data}">
 							<th scope="row"><input type="checkbox" /></th>
-							<td><a href="view.html" target="_blank">疯狂Spring Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战，疯狂Spring
-									Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战</a></td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
+							<td><a href="view.html" target="_blank" th:text="*{bookNames}"
+									th:href="@{/sale/view/} + *{id}">
+									疯狂Spring Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战，
+									疯狂Spring Cloud微服务架构实战，疯狂Spring Cloud微服务架构实战</a></td>
+							<td th:text="*{money}">100</td>
+							<td th:text="*{createTime}">2018-01-01 00:00:00</td>
 						</tr>
 						<tr>
 							<th scope="row"><input type="checkbox" /></th>
@@ -88,9 +90,9 @@
 		<div class="row">
 			<div class="col-lg-4"></div>
 			<div class="col-lg-1"><button type="button" class="btn btn-primary"
-					onClick="document.location.href='content.html'">添加</button></div>
-			<div class="col-lg-1"><button type="button" class="btn btn-primary">删除</button></div>
-			<nav aria-label="Page navigation example" class="col-lg-1">
+					onClick="document.location.href='content.html'"
+					th:onclick="|document.location.href='@{/sale/add}'|">添加</button></div>
+			<nav class="col-lg-1" th:replace="~{common/page::page('/sale/list')}">
 				<ul class="pagination">
 					<li class="page-item">
 						<a class="page-link" href="#" aria-label="Previous">
@@ -100,7 +102,7 @@
 					<li class="page-item"><a class="page-link" href="#">1</a></li>
 					<li class="page-item"><a class="page-link" href="#">2</a></li>
 					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">4</a></li>
 					<li class="page-item">
 						<a class="page-link" href="#" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
