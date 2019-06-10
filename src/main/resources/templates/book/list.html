@@ -27,37 +27,13 @@
 							<th scope="col" width="10%">操作</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"><input type="checkbox" /></th>
-							<td><a href="view.html" target="_blank">疯狂Spring Cloud微服务架构实战</a></td>
-							<td>杨恩雄</td>
-							<td>40</td>
-							<td>修改</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" </th> <td>疯狂Java讲义</td>
-							<td>李刚</td>
-							<td>80</td>
-							<td>修改</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" </th> <td>疯狂工作流讲义</td>
-							<td>杨恩雄</td>
-							<td>50</td>
-							<td>修改</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" </th> <td>疯狂Spring Cloud微服务架构实战</td>
-							<td>杨恩雄</td>
-							<td>40</td>
-							<td>修改</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" </th> <td>疯狂Spring Cloud微服务架构实战</td>
-							<td>杨恩雄</td>
-							<td>40</td>
-							<td>修改</td>
+					<tbody th:remove="all-but-first">
+						<tr th:each="data : ${datas.content}" th:object="${data}">
+							<td scope="row"><input type="checkbox" name="ids" th:value="*{id}" /></td>
+							<td><a th:href="@{/book/view/} + *{id}" target="_blank" th:text="*{name}">书名</a></td>
+							<td th:text="*{author}">作者</td>
+							<td th:text="*{price}">价格</td>
+							<td><a th:href="@{/book/edit/} + *{id}">修改</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -65,26 +41,17 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4"></div>
-			<div class="col-lg-1"><button type="button" class="btn btn-primary"
-					onClick="document.location.href='content.html'">添加</button></div>
-			<div class="col-lg-1"><button type="button" class="btn btn-primary">删除</button></div>
-			<nav class="col-lg-1">
-				<ul class="pagination">
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
-					</li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-				</ul>
+			<div class="col-lg-1">
+				<button type="button" class="btn btn-primary"
+				th:onclick="|document.location.href='@{/book/add}'|">添加</button></div>
+			<div class="col-lg-1"><button type="button" class="btn btn-primary" id="delButton">删除</button></div>
+			<script>
+				$("#delButton").click(function () {
+					$("#dataForm").attr("action", "[[ @{/book/delete/} ]][[ ${datas.number} ]]");
+					$("#dataForm").submit();
+				});
+			</script>
+			<nav class="col-lg-1" th:replace="~{common/page::page('/book/list')}">
 			</nav>
 		</div>
 		<div class="row" style="height: 20px;"></div>
