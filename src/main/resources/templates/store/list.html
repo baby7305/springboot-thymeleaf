@@ -26,36 +26,12 @@
 							<th scope="col" width="30%">时间</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
+					<tbody th:remove="all-but-first">
+						<tr th:each="data : ${datas.content}" th:object="${data}">
 							<th scope="row"><input type="checkbox" /></th>
-							<td><a href="view.html" target="_blank">疯狂Spring Cloud微服务架构实战，疯狂Java讲义</a></td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" /></th>
-							<td>疯狂Spring Cloud微服务架构实战</td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" /></th>
-							<td>疯狂Spring Cloud微服务架构实战</td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" /></th>
-							<td>疯狂Spring Cloud微服务架构实战</td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox" /></th>
-							<td>疯狂Spring Cloud微服务架构实战</td>
-							<td>100</td>
-							<td>2018-01-01 00:00:00</td>
+							<td><a target="_blank" th:text="*{bookNames}" th:href="@{/store/view/} + *{id}">书名</a></td>
+							<td th:text="*{amount}">库存</td>
+							<td th:text="*{createTime}">时间</td>
 						</tr>
 					</tbody>
 				</table>
@@ -64,25 +40,8 @@
 		<div class="row">
 			<div class="col-lg-4"></div>
 			<div class="col-lg-1"><button type="button" class="btn btn-primary"
-					onClick="document.location.href='content.html'">添加</button></div>
-			<div class="col-lg-1"><button type="button" class="btn btn-primary">删除</button></div>
-			<nav class="col-lg-1">
-				<ul class="pagination">
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
-					</li>
-					<li class="page-item active"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-				</ul>
+					th:onclick="|document.location.href='@{/store/add}'|">添加</button></div>
+			<nav class="col-lg-1" th:replace="~{common/page::page('/store/list')}">
 			</nav>
 		</div>
 		<div class="row" style="height: 20px;"></div>
