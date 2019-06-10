@@ -20,11 +20,12 @@
 				<div class="card">
 					<div class="card-header">新建图书销售</div>
 					<div class="card-body">
-						<form>
+						<form id="dataForm" th:action="@{/sale/save}">
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label">图书：</label>
-								<button type="button" class="btn btn-primary"
-									onClick="document.location.href='choose.html'">选择图书</button>
+								<button type="button" class="btn btn-primary" 
+									th:onclick="|window.open('@{/book/choose}', '_blank', 'width=700,height=500,resizable=no')|"
+									th:disabled="${readonly}">选择图书</button>
 							</div>
 							<div class="form-group row">
 								<table class="table col-lg-12" style="border: 1px solid #cccfc9;">
@@ -36,7 +37,7 @@
 											<th scope="col" width="15%">操作</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="bookDatas">
 										<tr>
 											<td>疯狂Spring Cloud微服务架构实战</td>
 											<td>100.00</td>
@@ -60,12 +61,14 @@
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label">总价：</label>
-								<input type="text" readonly class="col-sm-6 form-control-plaintext" value="1000.00">
+								<input type="text" readonly class="col-sm-6 form-control-plaintext" id="totalPrice" value="">
 							</div>
 							<div class="form-group row">
 								<div class="col-sm-5"></div>
 								<div class="col-sm-2">
-									<button type="submit" class="btn btn-primary">保 存</button>
+									<input type="hidden" id="itemJson" name="itemJson" />
+									<button type="button" class="btn btn-primary" onclick="submitForm()"
+										th:hidden="${readonly}">保 存</button>
 								</div>
 							</div>
 						</form>

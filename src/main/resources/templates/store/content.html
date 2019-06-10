@@ -20,38 +20,29 @@
 				<div class="card">
 					<div class="card-header">新建图书入库</div>
 					<div class="card-body">
-						<form>
+						<form id="dataForm" th:action="@{/store/save}">
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label">图书：</label>
-								<button type="button" class="btn btn-primary"
-									onClick="document.location.href='choose.html'">选择图书</button>
+								<button type="button" th:disabled="${readonly}" class="btn btn-primary"
+									th:onclick="|window.open('@{/book/choose}', '_blank', 'width=700,height=500,resizable=no')|">选择图书</button>
 							</div>
 							<div class="form-group row">
 								<table class="table col-lg-12" style="border: 1px solid #cccfc9;">
 									<thead>
 										<tr class="table-secondary">
 											<th scope="col" width="60%">书名</th>
-											<th scope="col" width="20%">数量</th>
-											<th scope="col" width="20%">操作</th>
+											<th scope="col" width="40%">数量</th>
+											<th scope="col" width="10%">操作</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="bookDatas">
 										<tr>
 											<td>疯狂Spring Cloud微服务架构实战</td>
-											<td><input type="text" class="col-sm-12 form-control"></td>
-											<td><input type="button" class="btn btn-primary" value="删除" /></td>
-										</tr>
-										<tr>
-											<td>疯狂Java讲义</td>
-											<td><input type="text" class="col-sm-12 form-control"></td>
-											<td><input type="button" class="btn btn-primary" value="删除" /></td>
-										</tr>
-										<tr>
-											<td>疯狂工作流讲义</td>
 											<td>
 												<input type="text" class="col-sm-12 form-control">
-											<td><input type="button" class="btn btn-primary" value="删除" /></td>
+												<input type="hidden" />
 											</td>
+											<td><input type="button" value="删除" class="btn btn-primary" /></td>
 										</tr>
 									</tbody>
 								</table>
@@ -59,7 +50,9 @@
 							<div class="form-group row">
 								<div class="col-sm-5"></div>
 								<div class="col-sm-2">
-									<button type="submit" class="btn btn-primary">保 存</button>
+									<input type="hidden" id="itemJson" name="itemJson" />
+									<button type="button" class="btn btn-primary" onclick="submitForm()"
+										th:hidden="${readonly}">保 存</button>
 								</div>
 							</div>
 						</form>
