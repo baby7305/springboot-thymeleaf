@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="~{common/header}">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row" style="height: 10px;"></div>
+		<div class="row">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-10">
+				<table class="table" style="border: 1px solid #cccfc9;">
+					<thead>
+						<tr class="table-secondary">
+							<th scope="col" width="15%">选择</th>
+							<th scope="col" width="50%">书名</th>
+							<th scope="col" width="20%">作者</th>
+							<th scope="col" width="15%">售价</th>
+						</tr>
+					</thead>
+					<tbody th:remove="${datas == null} ? none : all-but-first">
+						<tr th:each="data : ${datas.content}" th:object="${data}">
+							<th scope="row"><input type="checkbox"
+									th:onclick="|selectBook(this, '${data.id}', '${data.name}', '${data.price}')|" />
+							</th>
+							<td th:text="*{name}">书名</td>
+							<td th:text="*{author}">作者</td>
+							<td th:text="*{price}">价格</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4"></div>
+			<nav class="col-lg-1" th:replace="~{common/page::page('/book/choose')}">
+			</nav>
+		</div>
+		<div class="row" style="height: 20px;"></div>
+		<div class="row">
+			<div class="col-lg-12" style="text-align: center;">
+				Copyright © 2017-2018 Angus Young All rights reserved.
+			</div>
+		</div>
+		<div class="row" style="height: 20px;"></div>
+	</div>
+
+	<script>
+		function selectBook(checkbox, id, name, price) {
+			if (checkbox.checked) {
+				window.opener.addBook(id, name, price);
+			}
+		}
+	</script>
+
+
+</body>
+
+</html>
